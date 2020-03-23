@@ -38,7 +38,7 @@ public class ControladoraInicio implements Initializable {
     JFXComboBox ComboProfesor;
 
     @FXML
-    TableView Tabla;
+    TableView<Asignaturas> Tabla;
     @FXML
     TableColumn cLunes, cMartes, cMiercoles,cJueves,cViernes;
     @FXML
@@ -86,34 +86,32 @@ public class ControladoraInicio implements Initializable {
             @Override
             public void run() {
                 try {
-
-                    String url = "jdbc:sqlite:C:/sqlite/ProyectoIngenieria.db";
-                    String username = "root";
-                    String password = "";
-                    Connection conn = DriverManager.getConnection(url, username, password);
-                    Statement stmt = conn.createStatement();
+                	Conexion conexion = new Conexion();
                     ResultSet rs;
-                    connection= Conexion.connect();
+                    connection= conexion.getConexion();
+                    Statement stmt = connection.createStatement();
                     rs = stmt.executeQuery("SELECT * FROM Asignaturas");
                     while (rs.next()){
 
                         //El select obtiene el nombre de las asignaturas pero no las muestra
                         String nombre=rs.getString(DatosBD.TABLA_ASIGNATURA_NOMBRE);
+                        //System.out.println(nombre);
                         Asignaturas a=new Asignaturas(nombre);
                       tablass.add(a);
-                     Tabla.setItems(tablass);
                     }
-
                 } catch (SQLException e) {
                     e.printStackTrace();
-                }
+                } catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+                Tabla.setItems(tablass);
             }
         };
         thread.start();
     }
 
     private void instancias() {
-        listaCombo = FXCollections.observableArrayList();
+    	listaCombo = FXCollections.observableArrayList();
         tablass = FXCollections.observableArrayList();
     }
 
