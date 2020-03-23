@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(recursos/fondovilla2.jpg);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladoras.ControladoraInicio">
+   <top>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.9" prefHeight="364.0" prefWidth="516.0" style="-fx-background-color: white; -fx-background-position: center;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <JFXComboBox fx:id="ComboProfesor" focusColor="#f02929" layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="480.0" promptText="Selecciona profesor" unFocusColor="#b24646" />
+            <TableView fx:id="Tabla" editable="true" layoutX="10.0" layoutY="53.0" prefHeight="259.0" prefWidth="498.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="cLunes" prefWidth="75.0" text="Lunes" />
+                <TableColumn fx:id="cMartes" prefWidth="75.0" text="Martes" />
+                  <TableColumn fx:id="cMiercoles" prefWidth="75.0" text="Miercoles" />
+                  <TableColumn fx:id="cJueves" prefWidth="75.0" text="Jueves" />
+                  <TableColumn fx:id="cViernes" prefWidth="75.0" text="Viernes" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <JFXButton fx:id="btnSalir" alignment="CENTER" buttonType="RAISED" layoutX="141.0" layoutY="325.0" prefHeight="25.0" prefWidth="237.0" ripplerFill="#eb2f2f" text="Salir" textAlignment="CENTER" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>
