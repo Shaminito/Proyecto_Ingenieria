@@ -1,19 +1,31 @@
 package utils;
 
 public class Asignaturas {
-    String asignatura;
+    
+	private String nomAsignatura;
+	private int semestre;
+	private int curso;
+	
+	//Columnas para BD
+	public static final String COLUMNA_NOMBRE = "NomAsig";
+	public static final String COLUMNA_SEMESTRE = "Semestre";
+	public static final String COLUMNA_CURSO = "Curso";
 
-    public Asignaturas(String asignatura) {
-        this.asignatura = asignatura;
+    public Asignaturas(String nomAsignatura, int semestre, int curso) {
+        this.nomAsignatura = nomAsignatura;
+        this.semestre = semestre;
+        this.curso = curso;
     }
 
+	public String getNomAsignatura() {
+		return nomAsignatura;
+	}
 
-    public String getAsignatura() {
-        return asignatura;
-    }
+	public int getSemestre() {
+		return semestre;
+	}
 
-    @Override
-    public String toString() {
-        return getAsignatura();
-    }
+	public int getCurso() {
+		return curso;
+	}
 }

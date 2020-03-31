@@ -2,134 +2,223 @@ package controladoras;
 
 import basededatos.Conexion;
 
-import basededatos.DatosBD;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import utils.Asignaturas;
-import utils.Nombres;
-import utils.Profesor;
+import utils.Profesores;
 
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 public class ControladoraInicio implements Initializable {
-    @FXML
-    JFXComboBox ComboProfesor;
+	@FXML
+	JFXComboBox<String> ComboProfesor;
 
-    @FXML
-    TableView<Asignaturas> Tabla;
-    @FXML
-    TableColumn cLunes, cMartes, cMiercoles,cJueves,cViernes;
-    @FXML
-    JFXButton btnSalir;
+	@FXML
+	TableView<Asignaturas> Tabla;
+	@FXML
+	TableColumn cLunes, cMartes, cMiercoles, cJueves, cViernes;
+	@FXML
+	JFXButton btnSalir;
 
+	private int idProf;
 
-    ObservableList<Nombres> listaCombo;
-    ObservableList<Asignaturas> tablass;
+	ObservableList<String> listaCombo;
+	ObservableList<Asignaturas> tablass;
 
-    Connection connection = null;
+	Conexion connection = null;
+	ArrayList<Asignaturas> asignaturas;
+	ArrayList<Profesores> profesores;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        instancias();
-        configurarTabla();
-        rellenarCombo();
-        rellenarTabla();
-        acciones();
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		connection = new Conexion();
+		idProf = ControladoraLogin.idProf;
+		instancias();
+		configurarTabla();
+		llamadaBBDD();
+		rellenarCombo();
+		rellenarTabla();
+		acciones();
+	}
 
+	/*
+	 * Se crea el m�todo para obtener el nombre del profesor para rellenar el combo
+	 * Tambien debe obtener los datos de las asignaturas que corresponde al profesor
+	 */
+	private void llamadaBBDD() {
+		obtenerAsignaturas();
+		obtenerProfesores();
+	}
 
-    private void configurarTabla() {
-        cLunes.setCellValueFactory(new PropertyValueFactory<>("Lunes"));
-        cMartes.setCellValueFactory(new PropertyValueFactory<>("Martes"));
-        cMiercoles.setCellValueFactory(new PropertyValueFactory<>("Miércoles"));
-        cJueves.setCellValueFactory(new PropertyValueFactory<>("Jueves"));
-        cViernes.setCellValueFactory(new PropertyValueFactory<>("Viernes"));
-    }
+	private void obtenerProfesores() {
+		profesores = new ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rslt = null;
+		
+		try {
+			
+			conn = connection.getConexion();
+			String query = "SELECT * FROM Profesores";
+			stmt = conn.createStatement();
+			rslt = stmt.executeQuery(query);
 
-    private void rellenarCombo() {
-        listaCombo.add(new Nombres("José Alberto Aijon"));
-        listaCombo.add(new Nombres("Asuncion Herreros"));
-        listaCombo.add(new Nombres("Darío Gallach"));
-        listaCombo.add(new Nombres("Fernando Aparicio"));
-        listaCombo.add(new Nombres("Juan Jose Martín"));
-        listaCombo.add(new Nombres("Christian Sucuzhanay"));
-        listaCombo.add(new Nombres("Jose Javier Medina"));
+			while (rslt.next()) {
 
-        ComboProfesor.setItems(listaCombo);
-    }
+				String nombre = rslt.getString(Profesores.COLUMNA_NOMBRE);
+				String correo = rslt.getString(Profesores.COLUMNA_CORREO);
+				
+				profesores.add(new Profesores(nombre, correo));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+			if(rslt != null) {rslt.close();}
+			if(stmt != null) {stmt.close();}
+			if(conn != null) {conn.close();}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-    private void rellenarTabla() {
+	private void obtenerAsignaturas() {
+		asignaturas = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rslt = null;
+		
+		try {
+			
+			conn = connection.getConexion();
+			String query = "SELECT * FROM Asignaturas WHERE idProfesor = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idProf);
+			rslt = pstmt.executeQuery();
 
-        Thread thread=new Thread(){
-            @Override
-            public void run() {
-                try {
-                	Conexion conexion = new Conexion();
-                    ResultSet rs;
-                    connection= conexion.getConexion();
-                    Statement stmt = connection.createStatement();
-                    rs = stmt.executeQuery("SELECT * FROM Asignaturas");
-                    while (rs.next()){
+			while (rslt.next()) {
 
-                        //El select obtiene el nombre de las asignaturas pero no las muestra
-                        String nombre=rs.getString(DatosBD.TABLA_ASIGNATURA_NOMBRE);
-                        //System.out.println(nombre);
-                        Asignaturas a=new Asignaturas(nombre);
-                      tablass.add(a);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+				String nombre = rslt.getString(Asignaturas.COLUMNA_NOMBRE);
+				int curso = rslt.getInt(Asignaturas.COLUMNA_CURSO);
+				int semestre = rslt.getInt(Asignaturas.COLUMNA_SEMESTRE);
+				
+				asignaturas.add(new Asignaturas(nombre, semestre, curso));
+				tablass.add(new Asignaturas(nombre, semestre, curso));
+				//System.out.println(nombre+" | "+curso+" | "+semestre);
+			}
+			Tabla.setItems(tablass);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+			if(rslt != null) {rslt.close();}
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void configurarTabla() {
+		cLunes.setCellValueFactory(new PropertyValueFactory<>("Lunes"));
+		cMartes.setCellValueFactory(new PropertyValueFactory<>("Martes"));
+		cMiercoles.setCellValueFactory(new PropertyValueFactory<>("Mi�rcoles"));
+		cJueves.setCellValueFactory(new PropertyValueFactory<>("Jueves"));
+		cViernes.setCellValueFactory(new PropertyValueFactory<>("Viernes"));
+	}
+
+	private void rellenarCombo() {
+		for(int i = 0; i < profesores.size(); i++) {
+			listaCombo.add(profesores.get(i).getNombre());
+		}
+		/*
+		 * listaCombo.add("José Alberto Aijon");
+		listaCombo.add("Asuncion Herreros");
+		listaCombo.add("Darío Gallach");
+		listaCombo.add("Fernando Aparicio");
+		listaCombo.add("Juan Jose Martín");
+		listaCombo.add("Christian Sucuzhanay");
+		listaCombo.add("Jose Javier Medina");
+		 */
+
+		ComboProfesor.setItems(listaCombo);
+	}
+
+	private void rellenarTabla() {
+
+		/*
+		 * Thread thread = new Thread() {
+		 * @Override
+			public void run() {
+				try {
+					Connection conn;
+					PreparedStatement pstmt;
+					ResultSet rs;
+
+					conn = connection.getConexion();
+					String query = "Select * FROM ASIGNATURAS WHERE idProfesor = ?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(idProf, 1);
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+
+						//String nombre = rs.getString(DatosBD.TABLA_ASIGNATURA_NOMBRE);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
-                Tabla.setItems(tablass);
-            }
-        };
-        thread.start();
-    }
+				Tabla.setItems(tablass);
+			}
+		};
+		thread.start();
+		*/
+	}
+			
 
-    private void instancias() {
-    	listaCombo = FXCollections.observableArrayList();
-        tablass = FXCollections.observableArrayList();
-    }
+	private void instancias() {
+		listaCombo = FXCollections.observableArrayList();
+		tablass = FXCollections.observableArrayList();
+	}
 
-    private void acciones() {
-        btnSalir.setOnAction(new ManejoAction());
-    }
+	private void acciones() {
+		btnSalir.setOnAction(new ManejoAction());
+	}
 
+	class ManejoAction implements EventHandler<ActionEvent> {
 
-    class ManejoAction implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			if (event.getSource() == btnSalir) {
+				Node source = (Node) event.getSource();
+				Stage stage = (Stage) source.getScene().getWindow();
+				stage.close();
 
-        @Override
-        public void handle(ActionEvent event) {
-            if (event.getSource() == btnSalir) {
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
-
-            }
-       }
-    }
+			}
+		}
+	}
 }

@@ -48,8 +48,7 @@ public class Conexion {
 		SQLiteConfig config = new SQLiteConfig(); //objeto de configuracion de dicha conexion		
 		config.enforceForeignKeys(true);  //controlar las forengkeys
 		
-		Connection con = DriverManager.getConnection(url,config.toProperties()); 
-		System.out.println("Conexion establecida");
+		Connection con = DriverManager.getConnection(url,config.toProperties());
 		return con;
 	}
   /* public static void main(String[] args) {
