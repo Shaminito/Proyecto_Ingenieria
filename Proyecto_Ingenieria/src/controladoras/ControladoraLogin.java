@@ -64,6 +64,7 @@ public class ControladoraLogin implements Initializable {
 			pw = br.readLine();
 			usuario.setText(us);
 			pass.setText(pw);
+			br.close();
 		} catch (IOException e) {
 
 		}

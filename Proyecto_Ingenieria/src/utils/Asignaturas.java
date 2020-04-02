@@ -2,6 +2,7 @@ package utils;
 
 public class Asignaturas {
     
+	private int idAsignaturas;
 	private String nomAsignatura;
 	private int semestre;
 	private int curso;
@@ -17,6 +18,14 @@ public class Asignaturas {
         this.curso = curso;
     }
 
+	public Asignaturas(int idAsignaturas, String nomAsignatura, int semestre, int curso) {
+		super();
+		this.idAsignaturas = idAsignaturas;
+		this.nomAsignatura = nomAsignatura;
+		this.semestre = semestre;
+		this.curso = curso;
+	}
+
 	public String getNomAsignatura() {
 		return nomAsignatura;
 	}
@@ -27,5 +36,9 @@ public class Asignaturas {
 
 	public int getCurso() {
 		return curso;
+	}
+	
+	public int getIdAsignaturas() {
+		return idAsignaturas;
 	}
 }

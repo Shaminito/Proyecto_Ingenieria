@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,10 +28,18 @@ public class ControladoraInicio implements Initializable {
 	@FXML
 	JFXComboBox<String> ComboProfesor;
 
+	/*
 	@FXML
 	TableView<Asignaturas> Tabla;
 	@FXML
 	TableColumn cLunes, cMartes, cMiercoles, cJueves, cViernes;
+	 */
+	@FXML
+	Label horario1, horario2, horario3;
+	
+	@FXML
+	Label zona1, zona2, zona3, zona4, zona5, zona6, zona7, zona8, zona9, zona10, zona11, zona12, zona13, zona14, zona15;
+	
 	@FXML
 	JFXButton btnSalir;
 
@@ -124,7 +133,7 @@ public class ControladoraInicio implements Initializable {
 				tablass.add(new Asignaturas(nombre, semestre, curso));
 				//System.out.println(nombre+" | "+curso+" | "+semestre);
 			}
-			Tabla.setItems(tablass);
+			//Tabla.setItems(tablass);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -142,11 +151,11 @@ public class ControladoraInicio implements Initializable {
 	}
 
 	private void configurarTabla() {
-		cLunes.setCellValueFactory(new PropertyValueFactory<>("Lunes"));
-		cMartes.setCellValueFactory(new PropertyValueFactory<>("Martes"));
-		cMiercoles.setCellValueFactory(new PropertyValueFactory<>("Miércoles"));
-		cJueves.setCellValueFactory(new PropertyValueFactory<>("Jueves"));
-		cViernes.setCellValueFactory(new PropertyValueFactory<>("Viernes"));
+		//cLunes.setCellValueFactory(new PropertyValueFactory<>("Lunes"));
+		//cMartes.setCellValueFactory(new PropertyValueFactory<>("Martes"));
+		//cMiercoles.setCellValueFactory(new PropertyValueFactory<>("Miércoles"));
+		//cJueves.setCellValueFactory(new PropertyValueFactory<>("Jueves"));
+		//cViernes.setCellValueFactory(new PropertyValueFactory<>("Viernes"));
 	}
 
 	private void rellenarCombo() {
@@ -217,7 +226,6 @@ public class ControladoraInicio implements Initializable {
 				Node source = (Node) event.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
 				stage.close();
-
 			}
 		}
 	}
