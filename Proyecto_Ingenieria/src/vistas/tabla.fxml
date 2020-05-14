@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,19 +12,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-image: url(recursos/fondovilla2.jpg);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladoras.ControladoraInicio">
+<BorderPane fx:id="ventana" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-image: url(recursos/fondovilla2.jpg);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladoras.ControladoraInicio">
    <bottom>
       <JFXButton fx:id="btnSalir" alignment="CENTER" buttonType="RAISED" maxWidth="1.7976931348623157E308" ripplerFill="#eb2f2f" text="Salir" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin></JFXButton>
    </bottom>
-   <top>
-      <JFXComboBox fx:id="ComboProfesor" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Selecciona profesor" unFocusColor="#b24646">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin></JFXComboBox>
-   </top>
    <center>
       <GridPane alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -35,7 +30,7 @@
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints prefHeight="0.0" vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
@@ -251,4 +246,63 @@
          </children>
       </GridPane>
    </center>
+   <top>
+      <GridPane style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="btnProfesores" buttonType="RAISED" contentDisplay="CENTER" ripplerFill="#eb2f2f" text="Ver otros profesores" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </AnchorPane>
+            <JFXComboBox fx:id="ComboProfesor" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Selecciona profesor" unFocusColor="#b24646" visible="false" GridPane.columnIndex="1">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </JFXComboBox>
+            <JFXComboBox fx:id="cbSemestre" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Semestre" unFocusColor="#b24646" visible="false" GridPane.columnIndex="2">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </JFXComboBox>
+            <JFXComboBox fx:id="cbCurso" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Curso" unFocusColor="#b24646" visible="false" GridPane.columnIndex="3">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </JFXComboBox>
+            <AnchorPane GridPane.columnIndex="4">
+               <children>
+                  <JFXButton fx:id="btnVolver" buttonType="RAISED" contentDisplay="CENTER" ripplerFill="#eb2f2f" text="Volver" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </AnchorPane>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </GridPane>
+   </top>
 </BorderPane>
