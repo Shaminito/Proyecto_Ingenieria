@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,15 +19,18 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="ventana" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-image: url(recursos/fondovilla2.jpg);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladoras.ControladoraInicio">
-   <bottom>
-      <JFXButton fx:id="btnSalir" alignment="CENTER" buttonType="RAISED" maxWidth="1.7976931348623157E308" ripplerFill="#eb2f2f" text="Salir" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-image: url(recursos/fondovilla2.jpg);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladoras.ControladoraInicio">
+   <top>
+      <JFXComboBox fx:id="ComboProfesor" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Selecciona curso" unFocusColor="#b24646">
          <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin></JFXButton>
-   </bottom>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </BorderPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXComboBox>
+   </top>
    <center>
-      <GridPane alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" gridLinesVisible="true" opacity="0.9" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
           <ColumnConstraints hgrow="SOMETIMES" />
@@ -30,7 +40,7 @@
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="0.0" vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
@@ -38,9 +48,9 @@
          <children>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Lunes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Lunes" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -49,34 +59,37 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Martes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="3">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Miercoles" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Miercoles" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="4">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Jueves" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Jueves" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="5">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Viernes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Viernes" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -85,8 +98,14 @@
                <children>
                   <Label fx:id="horario1" alignment="CENTER" contentDisplay="CENTER" text="8:30 - 10:30" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="14.0" />
                      </font>
+                     <opaqueInsets>
+                        <Insets left="20.0" right="20.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
@@ -94,8 +113,11 @@
                <children>
                   <Label fx:id="horario2" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" text="10:30 - 12:30" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="14.0" />
                      </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
@@ -103,206 +125,169 @@
                <children>
                   <Label fx:id="horario3" alignment="CENTER" contentDisplay="CENTER" text="12:30 - 14:30" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="14.0" />
                      </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="zona1" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="zona2" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Label fx:id="zona3" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="zona4" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="zona5" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>
                   <Label fx:id="zona6" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="zona7" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="zona8" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
                   <Label fx:id="zona9" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="zona10" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="zona11" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="3">
                <children>
                   <Label fx:id="zona12" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="zona13" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="zona14" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="3">
                <children>
                   <Label fx:id="zona15" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </Label>
                </children>
             </AnchorPane>
          </children>
-      </GridPane>
-   </center>
-   <top>
-      <GridPane style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" />
-          <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <JFXButton fx:id="btnProfesores" buttonType="RAISED" contentDisplay="CENTER" ripplerFill="#eb2f2f" text="Ver otros profesores" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </AnchorPane>
-            <JFXComboBox fx:id="ComboProfesor" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Selecciona profesor" unFocusColor="#b24646" visible="false" GridPane.columnIndex="1">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </JFXComboBox>
-            <JFXComboBox fx:id="cbSemestre" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Semestre" unFocusColor="#b24646" visible="false" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </JFXComboBox>
-            <JFXComboBox fx:id="cbCurso" focusColor="#f02929" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Curso" unFocusColor="#b24646" visible="false" GridPane.columnIndex="3">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </JFXComboBox>
-            <AnchorPane GridPane.columnIndex="4">
-               <children>
-                  <JFXButton fx:id="btnVolver" buttonType="RAISED" contentDisplay="CENTER" ripplerFill="#eb2f2f" text="Volver" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </AnchorPane>
-         </children>
-         <BorderPane.margin>
+         <opaqueInsets>
             <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
       </GridPane>
-   </top>
+   </center>
+   <bottom>
+      <Button fx:id="btnSalir" mnemonicParsing="false" opacity="0.95" prefHeight="25.0" prefWidth="431.0" style="-fx-background-color: #d62222;" text="Salir" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </bottom>
 </BorderPane>

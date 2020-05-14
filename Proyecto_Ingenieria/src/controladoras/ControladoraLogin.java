@@ -20,8 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.*;
 import java.net.URL;
 import java.sql.*;
@@ -43,7 +41,6 @@ public class ControladoraLogin implements Initializable {
 
 	@FXML
 	Button botonIniciar;
-	
 
 	Conexion acc;
 	String us, pw, cus, cpw;
@@ -142,11 +139,9 @@ public class ControladoraLogin implements Initializable {
 						if(rs.next()) {
 							idProf = rs.getInt(1);
 							Parent root = FXMLLoader.load(getClass().getResource("../vistas/tabla.fxml"));
-							Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-							Scene scene = new Scene(root, pantalla.getWidth(), pantalla.getHeight());
+                            Scene scene = new Scene(root, 600, 400);
                             Stage stage = (Stage) botonIniciar.getScene().getWindow();
                             stage.setScene(scene);
-                            stage.setResizable(true);
 						}
 						else {
 							Alert dialogoError = new Alert(Alert.AlertType.ERROR);

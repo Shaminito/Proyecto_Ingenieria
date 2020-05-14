@@ -11,11 +11,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 //import javafx.scene.control.TableColumn;
 //import javafx.scene.control.TableView;
 //import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import utils.Ano;
 import utils.Asignaturas;
 import utils.Horario;
 import utils.Profesores;
@@ -26,22 +29,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControladoraInicio implements Initializable {
-	
-	@FXML
-	JFXButton btnProfesores;
-	
 	@FXML
 	JFXComboBox<String> ComboProfesor;
-	
-	@FXML
-	JFXComboBox<String> cbSemestre;
-	
-	@FXML
-	JFXComboBox<String> cbCurso;
+	int cursoAMostrar=0;
 
-	@FXML
-	JFXButton btnVolver;
-	
 	@FXML
 	Label horario1, horario2, horario3;
 
@@ -49,34 +40,36 @@ public class ControladoraInicio implements Initializable {
 	Label zona1, zona2, zona3, zona4, zona5, zona6, zona7, zona8, zona9, zona10, zona11, zona12, zona13, zona14, zona15;
 
 	@FXML
-	JFXButton btnSalir;
+	Button btnSalir;
 
 	private int idProf;
 
-	ObservableList<String> listaProfesores;
-	ObservableList<String> listaSemestres;
-	ObservableList<String> listaCursos;
+	ObservableList<String> listaCombo;
+	// ObservableList<Asignaturas> tablass;
 
 	Conexion connection = null;
 	ArrayList<Asignaturas> asignaturas;
 	ArrayList<Profesores> profesores;
-	ArrayList<Integer> semestres;
-	ArrayList<Integer> cursos;
+	ArrayList<Ano> Curso;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		connection = new Conexion();
 		idProf = ControladoraLogin.idProf;
 		instancias();
-		// configurarTabla();
 		llamadaBBDD();
 		rellenarCombo();
 		rellenarTabla();
 		acciones();
 	}
 
+
+
+
+
+
 	/*
-	 * Se crea el método para obtener el nombre del profesor para rellenar el combo
+	 * Se crea el mï¿½todo para obtener el nombre del profesor para rellenar el combo
 	 * Tambien debe obtener los datos de las asignaturas que corresponde al profesor
 	 */
 	private void llamadaBBDD() {
@@ -86,7 +79,7 @@ public class ControladoraInicio implements Initializable {
 	}
 
 	private void obtenerProfesores() {
-		profesores = new ArrayList<>();
+		Curso = new ArrayList<>();
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rslt = null;
@@ -94,16 +87,15 @@ public class ControladoraInicio implements Initializable {
 		try {
 
 			conn = connection.getConexion();
-			String query = "SELECT * FROM Profesores";
+			String query = "SELECT distinct Curso FROM Asignaturas order by Curso";
 			stmt = conn.createStatement();
 			rslt = stmt.executeQuery(query);
 
 			while (rslt.next()) {
 
-				String nombre = rslt.getString(Profesores.COLUMNA_NOMBRE);
-				String correo = rslt.getString(Profesores.COLUMNA_CORREO);
+				String curso = rslt.getString(Ano.COLUMNA_CURSO);
 
-				profesores.add(new Profesores(nombre, correo));
+				Curso.add(new Ano(curso));
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -149,7 +141,10 @@ public class ControladoraInicio implements Initializable {
 				int semestre = rslt.getInt(Asignaturas.COLUMNA_SEMESTRE);
 
 				asignaturas.add(new Asignaturas(idAsignatura, nombre, semestre, curso));
+				// tablass.add(new Asignaturas(nombre, semestre, curso));
+				// System.out.println(nombre+" | "+curso+" | "+semestre);
 			}
+			// Tabla.setItems(tablass);
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -162,82 +157,6 @@ public class ControladoraInicio implements Initializable {
 				}
 				if (pstmt != null) {
 					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void obtenerSemestres() {
-		semestres = new ArrayList<>();
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rslt = null;
-
-		try {
-
-			conn = connection.getConexion();
-			String query = "SELECT DISTINCT semestre FROM Asignaturas";
-			stmt = conn.createStatement();
-			rslt = stmt.executeQuery(query);
-
-			while (rslt.next()) {
-				semestres.add(rslt.getInt(Asignaturas.COLUMNA_SEMESTRE));
-			}
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rslt != null) {
-					rslt.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void obtenerCursos() {
-		cursos = new ArrayList<>();
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rslt = null;
-
-		try {
-
-			conn = connection.getConexion();
-			String query = "SELECT DISTINCT curso FROM Asignaturas ORDER BY curso";
-			stmt = conn.createStatement();
-			rslt = stmt.executeQuery(query);
-
-			while (rslt.next()) {
-				cursos.add(rslt.getInt(Asignaturas.COLUMNA_CURSO));
-			}
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rslt != null) {
-					rslt.close();
-				}
-				if (stmt != null) {
-					stmt.close();
 				}
 				if (conn != null) {
 					conn.close();
@@ -267,6 +186,17 @@ public class ControladoraInicio implements Initializable {
 					asignaturas.get(i).addHorario(Integer.parseInt(rslt.getString(Horario.COLUMNA_HORA1)),
 							rslt.getString(Horario.COLUMNA_CLASE1), Integer.parseInt(rslt.getString(Horario.COLUMNA_HORA2)),
 							rslt.getString(Horario.COLUMNA_CLASE2));
+
+					/*
+					 * System.out.println(asignaturas.get(i).getNomAsignatura());
+					 * System.out.println("------------"); System.out.println("HORARIO1");
+					 * System.out.println(asignaturas.get(i).getHorario1().getHora());
+					 * System.out.println(asignaturas.get(i).getHorario1().getClase());
+					 * System.out.println("HORARIO2");
+					 * System.out.println(asignaturas.get(i).getHorario2().getHora());
+					 * System.out.println(asignaturas.get(i).getHorario2().getClase());
+					 * System.out.println("------------");
+					 */
 				}
 
 			}
@@ -292,32 +222,32 @@ public class ControladoraInicio implements Initializable {
 		}
 	}
 
-	private void rellenarCombo() {
-		//Combo de los profesores
-		for (int i = 0; i < profesores.size(); i++) {
-			listaProfesores.add(profesores.get(i).getNombre());
-		}
+	/*
+	 * private void configurarTabla() { //cLunes.setCellValueFactory(new
+	 * PropertyValueFactory<>("Lunes")); //cMartes.setCellValueFactory(new
+	 * PropertyValueFactory<>("Martes")); //cMiercoles.setCellValueFactory(new
+	 * PropertyValueFactory<>("Miï¿½rcoles")); //cJueves.setCellValueFactory(new
+	 * PropertyValueFactory<>("Jueves")); //cViernes.setCellValueFactory(new
+	 * PropertyValueFactory<>("Viernes")); }
+	 */
 
-		ComboProfesor.setItems(listaProfesores);
-		
-		//Combo de los semestres
-		obtenerSemestres();
-		for (int i = 0; i < semestres.size(); i++) {
-			listaSemestres.add(semestres.get(i)+"º semestre");
+	private void rellenarCombo() {
+		for (int i = 0; i < Curso.size(); i++) {
+			listaCombo.add(Curso.get(i).getCurso());
 		}
-		
-		cbSemestre.setItems(listaSemestres);
-		
-		//Combo de los cursos
-		obtenerCursos();
-		for (int i = 0; i < cursos.size(); i++) {
-			listaCursos.add(cursos.get(i)+"º curso");
-		}
-		
-		cbCurso.setItems(listaCursos);
+		/*
+		 * listaCombo.add("JosÃ© Alberto Aijon"); listaCombo.add("Asuncion Herreros");
+		 * listaCombo.add("DarÃ­o Gallach"); listaCombo.add("Fernando Aparicio");
+		 * listaCombo.add("Juan Jose MartÃ­n"); listaCombo.add("Christian Sucuzhanay");
+		 * listaCombo.add("Jose Javier Medina");
+		 */
+
+		ComboProfesor.setItems(listaCombo);
 	}
 
 	private void rellenarTabla() {
+		System.out.println("Rellenando tabla...");
+		
 
 		for (int i = 0; i < asignaturas.size(); i++) {
 			
@@ -325,7 +255,7 @@ public class ControladoraInicio implements Initializable {
 			
 			for(int j = 0; j < asignatura.getHorario().length ; j++) {
 				
-				if(asignatura.getCurso() == 1) {
+				if(asignatura.getCurso() == cursoAMostrar ) { //Aquï¿½ hay que introducir la variable de la selecciï¿½n del combo
 					
 					if(asignatura.getHorario(j).getHora() == 1) {
 						
@@ -377,47 +307,58 @@ public class ControladoraInicio implements Initializable {
 				}
 			}
 		}
+
 	}
 
 	private void instancias() {
-		listaProfesores = FXCollections.observableArrayList();
-		listaSemestres = FXCollections.observableArrayList();
-		listaCursos = FXCollections.observableArrayList();
+		listaCombo = FXCollections.observableArrayList();
+		// tablass = FXCollections.observableArrayList();
 	}
 
 	private void acciones() {
-		//Añadir eventos de los botones
 		btnSalir.setOnAction(new ManejoAction());
-		btnProfesores.setOnAction(new ManejoAction());
-		btnVolver.setOnAction(new ManejoAction());
+		ComboProfesor.setOnAction(new ManejoAction());
+		
 	}
 
 	class ManejoAction implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			//Botón para finalizar el programa
 			if (event.getSource() == btnSalir) {
 				Node source = (Node) event.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
 				stage.close();
 			}
-			//Para acceder a los profesores
-			else if(event.getSource() == btnProfesores) {
-				btnProfesores.setVisible(false);
-				ComboProfesor.setVisible(true);
-				cbSemestre.setVisible(true);
-				cbCurso.setVisible(true);
-				btnVolver.setVisible(true);
-			}
-			//Para volver a lo que pertenece al profesor
-			else if(event.getSource() == btnVolver) {
-				btnProfesores.setVisible(true);
-				ComboProfesor.setVisible(false);
-				cbSemestre.setVisible(false);
-				cbCurso.setVisible(false);
-				btnVolver.setVisible(false);
+			else if (event.getSource() == ComboProfesor) {
+				cursoAMostrar=ComboProfesor.getSelectionModel().getSelectedIndex()+1;
+				borrarTabla();
+				rellenarTabla();	
+				}
+				
 			}
 		}
+		
+		private void borrarTabla() {
+			
+//			for(int i=1;i<=15;i++) {
+//				(zona+i).setText("");
+//			}
+				zona1.setText("");
+				zona2.setText("");	
+				zona3.setText("");	
+				zona4.setText("");	
+				zona5.setText("");	
+				zona6.setText("");	
+				zona7.setText("");	
+				zona8.setText("");					
+				zona9.setText("");	
+				zona10.setText("");	
+				zona11.setText("");	
+				zona12.setText("");	
+				zona13.setText("");	
+				zona14.setText("");	
+				zona15.setText("");	
+		}
 	}
-}
+
