@@ -69,7 +69,8 @@ public class ControladoraInicio implements Initializable {
 	ArrayList<Integer> semestres;
 	ArrayList<Integer> cursos;
 	
-	int cursoAMostrar=0;
+	int cursoAMostrar = 0;
+	int semestreAMostrar = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -88,7 +89,7 @@ public class ControladoraInicio implements Initializable {
 	 * Tambien debe obtener los datos de las asignaturas que corresponde al profesor
 	 */
 	private void llamadaBBDD() {
-		obtenerAsignaturas();
+		obtenerAsignaturas(idProf);
 		obtenerHoraAsignatura();
 		obtenerProfesores();
 	}
@@ -135,7 +136,7 @@ public class ControladoraInicio implements Initializable {
 		}
 	}
 
-	private void obtenerAsignaturas() {
+	private void obtenerAsignaturas(int idProf) {
 		asignaturas = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -155,6 +156,10 @@ public class ControladoraInicio implements Initializable {
 				String nombre = rslt.getString(Asignaturas.COLUMNA_NOMBRE);
 				int curso = rslt.getInt(Asignaturas.COLUMNA_CURSO);
 				int semestre = rslt.getInt(Asignaturas.COLUMNA_SEMESTRE);
+				
+				System.out.println("------------------------------");
+				System.out.println(idAsignatura+" - "+nombre+" - "+curso+" - "+semestre);
+				System.out.println("------------------------------");
 
 				asignaturas.add(new Asignaturas(idAsignatura, nombre, semestre, curso));
 			}
@@ -178,6 +183,48 @@ public class ControladoraInicio implements Initializable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private int obtenerIdProf(String nomProf) {
+		int idProf = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rslt = null;
+
+		try {
+
+			conn = connection.getConexion();
+			String query = "SELECT * FROM Profesores WHERE NombreProf = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, nomProf);
+			rslt = pstmt.executeQuery();
+			
+			while (rslt.next()) {
+
+				idProf = rslt.getInt(Profesores.COLUMNA_ID);
+				System.out.println(idProf);
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rslt != null) {
+					rslt.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return idProf;
 	}
 	
 	private void obtenerSemestres() {
@@ -352,53 +399,55 @@ public class ControladoraInicio implements Initializable {
 				
 				if(asignatura.getCurso() == cursoAMostrar ) { //Aqu� hay que introducir la variable de la selecci�n del combo
 					
-					if(asignatura.getHorario(j).getHora() == 1) {
+					if(asignatura.getSemestre() == semestreAMostrar) {
 						
-						zona1.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						if(asignatura.getHorario(j).getHora() == 1) {
+							
+							zona1.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 2) {
+							zona2.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 3) {
+							zona3.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 4) {
+							zona4.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 5) {
+							zona5.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 6) {
+							zona6.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 7) {
+							zona7.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 8) {
+							zona8.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 9) {
+							zona9.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 10) {
+							zona10.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 11) {
+							zona11.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 12) {
+							zona12.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 13) {
+							zona13.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 14) {
+							zona14.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
+						else if(asignatura.getHorario(j).getHora() == 15) {
+							zona15.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
+						}
 					}
-					else if(asignatura.getHorario(j).getHora() == 2) {
-						zona2.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 3) {
-						zona3.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 4) {
-						zona4.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 5) {
-						zona5.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 6) {
-						zona6.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 7) {
-						zona7.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 8) {
-						zona8.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 9) {
-						zona9.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 10) {
-						zona10.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 11) {
-						zona11.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 12) {
-						zona12.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 13) {
-						zona13.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 14) {
-						zona14.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					else if(asignatura.getHorario(j).getHora() == 15) {
-						zona15.setText(asignatura.getNomAsignatura()+"\n - Clase: "+asignatura.getHorario(j).getClase()+"\n - Curso: "+asignatura.getCurso());
-					}
-					
 				}
 			}
 		}
@@ -450,16 +499,37 @@ public class ControladoraInicio implements Initializable {
 				cbSemestre.setVisible(false);
 				cbCurso.setVisible(false);
 				btnVolver.setVisible(false);
+				borrarTabla();
+				obtenerAsignaturas(idProf);
+				obtenerHoraAsignatura();
+				cursoAMostrar = 1;
+				semestreAMostrar = 1;
+				rellenarTabla();
 			}
 			else if (event.getSource() == comboPersonal) {
+				semestreAMostrar = 1;
 				cursoAMostrar = comboPersonal.getSelectionModel().getSelectedIndex()+1;
 				borrarTabla();
-				rellenarTabla();	
+				rellenarTabla();
+				semestreAMostrar = 0;
 			}
 			else if(event.getSource() == ComboProfesor) {
-				System.out.println(ComboProfesor.getSelectionModel().getSelectedItem());
+				String profesor = ComboProfesor.getSelectionModel().getSelectedItem();
+				borrarTabla();
+				obtenerAsignaturas(obtenerIdProf(profesor));
+				obtenerHoraAsignatura();
+				rellenarTabla();
 			}
-				
+			else if(event.getSource() == cbSemestre) {
+				semestreAMostrar = cbSemestre.getSelectionModel().getSelectedIndex()+1;
+				borrarTabla();
+				rellenarTabla();
+			}
+			else if(event.getSource() == cbCurso) {
+				cursoAMostrar = cbCurso.getSelectionModel().getSelectedIndex()+1;
+				borrarTabla();
+				rellenarTabla();
+			}
 		}
 	}
 	

@@ -9,6 +9,7 @@ public class Profesores {
 	// Columnas para BD
 	public static final String COLUMNA_NOMBRE = "NombreProf";
 	public static final String COLUMNA_CORREO = "CorreoProf";
+	public static final String COLUMNA_ID = "IdProf";
 
 	public Profesores(String nombre, String correo) {
 		this.nombre = nombre;
