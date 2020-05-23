@@ -142,11 +142,9 @@ public class ControladoraLogin implements Initializable {
 						if(rs.next()) {
 							idProf = rs.getInt(1);
 							Parent root = FXMLLoader.load(getClass().getResource("../vistas/tabla.fxml"));
-							Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-							Scene scene = new Scene(root, pantalla.getWidth(), pantalla.getHeight());
+                            Scene scene = new Scene(root, 600, 400);
                             Stage stage = (Stage) botonIniciar.getScene().getWindow();
                             stage.setScene(scene);
-                            stage.setResizable(true);
 						}
 						else {
 							Alert dialogoError = new Alert(Alert.AlertType.ERROR);

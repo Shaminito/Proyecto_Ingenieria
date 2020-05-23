@@ -1,6 +1,7 @@
 package controladoras;
 
 import basededatos.Conexion;
+import controladoras.ControladoraInicio.ManejoAction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -11,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 //import javafx.scene.control.TableColumn;
 //import javafx.scene.control.TableView;
@@ -34,6 +36,9 @@ public class ControladoraInicio implements Initializable {
 	JFXComboBox<String> ComboProfesor;
 	
 	@FXML
+	JFXComboBox<String> comboPersonal;
+	
+	@FXML
 	JFXComboBox<String> cbSemestre;
 	
 	@FXML
@@ -49,12 +54,13 @@ public class ControladoraInicio implements Initializable {
 	Label zona1, zona2, zona3, zona4, zona5, zona6, zona7, zona8, zona9, zona10, zona11, zona12, zona13, zona14, zona15;
 
 	@FXML
-	JFXButton btnSalir;
+	Button btnSalir;
 
 	private int idProf;
 
 	ObservableList<String> listaProfesores;
 	ObservableList<String> listaSemestres;
+	ObservableList<String> listaComboPersonal;
 	ObservableList<String> listaCursos;
 
 	Conexion connection = null;
@@ -62,6 +68,8 @@ public class ControladoraInicio implements Initializable {
 	ArrayList<Profesores> profesores;
 	ArrayList<Integer> semestres;
 	ArrayList<Integer> cursos;
+	
+	int cursoAMostrar=0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -293,6 +301,14 @@ public class ControladoraInicio implements Initializable {
 	}
 
 	private void rellenarCombo() {
+		
+		/*
+		 * listaCombo.add("José Alberto Aijon"); listaCombo.add("Asuncion Herreros");
+		 * listaCombo.add("Darío Gallach"); listaCombo.add("Fernando Aparicio");
+		 * listaCombo.add("Juan Jose Martín"); listaCombo.add("Christian Sucuzhanay");
+		 * listaCombo.add("Jose Javier Medina");
+		 */
+		
 		//Combo de los profesores
 		for (int i = 0; i < profesores.size(); i++) {
 			listaProfesores.add(profesores.get(i).getNombre());
@@ -315,9 +331,18 @@ public class ControladoraInicio implements Initializable {
 		}
 		
 		cbCurso.setItems(listaCursos);
+		
+		//Combo personal
+		for (int i = 0; i < cursos.size(); i++) {
+			listaComboPersonal.add(cursos.get(i)+"� curso");
+		}
+			
+		comboPersonal.setItems(listaComboPersonal);
 	}
 
 	private void rellenarTabla() {
+		System.out.println("Rellenando tabla...");
+		
 
 		for (int i = 0; i < asignaturas.size(); i++) {
 			
@@ -325,7 +350,7 @@ public class ControladoraInicio implements Initializable {
 			
 			for(int j = 0; j < asignatura.getHorario().length ; j++) {
 				
-				if(asignatura.getCurso() == 1) {
+				if(asignatura.getCurso() == cursoAMostrar ) { //Aqu� hay que introducir la variable de la selecci�n del combo
 					
 					if(asignatura.getHorario(j).getHora() == 1) {
 						
@@ -377,9 +402,11 @@ public class ControladoraInicio implements Initializable {
 				}
 			}
 		}
+
 	}
 
 	private void instancias() {
+		listaComboPersonal = FXCollections.observableArrayList();
 		listaProfesores = FXCollections.observableArrayList();
 		listaSemestres = FXCollections.observableArrayList();
 		listaCursos = FXCollections.observableArrayList();
@@ -390,6 +417,10 @@ public class ControladoraInicio implements Initializable {
 		btnSalir.setOnAction(new ManejoAction());
 		btnProfesores.setOnAction(new ManejoAction());
 		btnVolver.setOnAction(new ManejoAction());
+		comboPersonal.setOnAction(new ManejoAction());
+		ComboProfesor.setOnAction(new ManejoAction());
+		cbSemestre.setOnAction(new ManejoAction());
+		cbCurso.setOnAction(new ManejoAction());
 	}
 
 	class ManejoAction implements EventHandler<ActionEvent> {
@@ -405,6 +436,7 @@ public class ControladoraInicio implements Initializable {
 			//Para acceder a los profesores
 			else if(event.getSource() == btnProfesores) {
 				btnProfesores.setVisible(false);
+				comboPersonal.setVisible(false);
 				ComboProfesor.setVisible(true);
 				cbSemestre.setVisible(true);
 				cbCurso.setVisible(true);
@@ -413,11 +445,43 @@ public class ControladoraInicio implements Initializable {
 			//Para volver a lo que pertenece al profesor
 			else if(event.getSource() == btnVolver) {
 				btnProfesores.setVisible(true);
+				comboPersonal.setVisible(true);
 				ComboProfesor.setVisible(false);
 				cbSemestre.setVisible(false);
 				cbCurso.setVisible(false);
 				btnVolver.setVisible(false);
 			}
+			else if (event.getSource() == comboPersonal) {
+				cursoAMostrar = comboPersonal.getSelectionModel().getSelectedIndex()+1;
+				borrarTabla();
+				rellenarTabla();	
+			}
+			else if(event.getSource() == ComboProfesor) {
+				System.out.println(ComboProfesor.getSelectionModel().getSelectedItem());
+			}
+				
 		}
+	}
+	
+	private void borrarTabla() {
+		
+//		for(int i=1;i<=15;i++) {
+//			(zona+i).setText("");
+//		}
+			zona1.setText("");
+			zona2.setText("");	
+			zona3.setText("");	
+			zona4.setText("");	
+			zona5.setText("");	
+			zona6.setText("");	
+			zona7.setText("");	
+			zona8.setText("");					
+			zona9.setText("");	
+			zona10.setText("");	
+			zona11.setText("");	
+			zona12.setText("");	
+			zona13.setText("");	
+			zona14.setText("");	
+			zona15.setText("");	
 	}
 }
